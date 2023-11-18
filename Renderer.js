@@ -187,7 +187,7 @@ export class Renderer extends BaseRenderer {
             colorAttachments: [
                 {
                     view: this.context.getCurrentTexture().createView(),
-                    clearValue: [1, 1, 1, 1],
+                    clearValue: { r: 0, g: 1, b: 0, a: 1 }, // Green color: RGBA values
                     loadOp: 'clear',
                     storeOp: 'store',
                 },
@@ -198,7 +198,7 @@ export class Renderer extends BaseRenderer {
                 depthLoadOp: 'clear',
                 depthStoreOp: 'discard',
             },
-        });
+        });        
         this.renderPass.setPipeline(this.pipeline);
 
         const cameraComponent = camera.getComponentOfType(Camera);
