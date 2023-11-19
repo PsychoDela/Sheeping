@@ -213,13 +213,13 @@
   ],
   "images": [
     {
-      "uri": "textures/baseColor.jpg"
+      "uri": "baseColor.jpg"
     },
     {
-      "uri": "textures/occlusionRoughnessMetallic.jpg"
+      "uri": "occlusionRoughnessMetallic.jpg"
     },
     {
-      "uri": "textures/normal.png"
+      "uri": "normal.png"
     }
   ],
   "textures": [

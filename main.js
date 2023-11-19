@@ -33,13 +33,33 @@ camera.addComponent(new OrbitController(camera, document.body, {
 }));
 
 const model = scene.find(node => node.getComponentOfType(Model));
-const jumpAnimator = new JumpAnimator(model /* assuming 'model' is the node you want to animate */, /* specify jumpHeight and jumpDuration */);
+const jumpAnimator = new JumpAnimator(model);
 
 document.addEventListener('keydown', (event) => {
     if (event.code == 'Space') {
         jumpAnimator.startJump();
     }
 });
+
+// Load the new model using the GLTFLoader
+const newModelLoader = new GLTFLoader();
+await newModelLoader.load('common/models/Gear1.gltf');
+
+// Create a new scene for the new model
+const newModelScene = newModelLoader.loadScene(newModelLoader.defaultScene);
+
+// Optionally, you can manipulate the new model's properties (position, scale, rotation) before adding it to the main scene.
+// For example:
+const newModel = newModelScene.find(node => node.getComponentOfType(Model));
+const transform = newModel.getComponentOfType(Transform);
+// Modify the position, scale, or rotation of the new model
+transform.translation = [0, 0, 0];
+transform.scale = [0.2, 0.2, 0.2];
+// transform.rotation = [quatX, quatY, quatZ, quatW];
+
+// Add the new model to the main scene
+scene.addChild(newModelScene);
+
 
 function updateScene(time, dt) {
     scene.traverse(node => {
