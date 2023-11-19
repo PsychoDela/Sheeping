@@ -35,30 +35,37 @@ camera.addComponent(new OrbitController(camera, document.body, {
 const model = scene.find(node => node.getComponentOfType(Model));
 const jumpAnimator = new JumpAnimator(model);
 
-document.addEventListener('keydown', (event) => {
+document.addEventListener('keydown', async (event) => {
     if (event.code == 'Space') {
         jumpAnimator.startJump();
+    } 
+    else if (event.key == 'z' || event.key == 'Z') { // Checking for 'Z' key press
+        try {
+            const newModelLoader = new GLTFLoader();
+            await newModelLoader.load('common/models/Gear1.gltf');
+
+            const newModelScene = newModelLoader.loadScene(newModelLoader.defaultScene);
+            const newModel = newModelScene.find(node => node.getComponentOfType(Model));
+            const transform = newModel.getComponentOfType(Transform);
+
+            // Generate random positions for x, y, z within a specific range
+            const randomX = Math.random() * 20 - 10; // Adjust these ranges as needed
+    
+
+            // Set the position of the new model randomly on the screen
+            transform.translation = [randomX, 50, 0];
+            transform.scale = [0.2, 0.2, 0.2]; // Change the scale to make sure it's visible
+
+            // Log the new model's properties for debugging
+            console.log('New Model Properties:', transform);
+
+            scene.addChild(newModelScene);
+        } catch (error) {
+            console.error('Error loading Gear1 model:', error);
+        }
     }
 });
 
-// Load the new model using the GLTFLoader
-const newModelLoader = new GLTFLoader();
-await newModelLoader.load('common/models/Gear1.gltf');
-
-// Create a new scene for the new model
-const newModelScene = newModelLoader.loadScene(newModelLoader.defaultScene);
-
-// Optionally, you can manipulate the new model's properties (position, scale, rotation) before adding it to the main scene.
-// For example:
-const newModel = newModelScene.find(node => node.getComponentOfType(Model));
-const transform = newModel.getComponentOfType(Transform);
-// Modify the position, scale, or rotation of the new model
-transform.translation = [0, 0, 0];
-transform.scale = [0.2, 0.2, 0.2];
-// transform.rotation = [quatX, quatY, quatZ, quatW];
-
-// Add the new model to the main scene
-scene.addChild(newModelScene);
 
 
 function updateScene(time, dt) {
