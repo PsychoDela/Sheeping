@@ -33,12 +33,6 @@ camera.addComponent(new OrbitController(camera, document.body, {
 
 const model = scene.find(node => node.getComponentOfType(Model));
 
-/*model.addComponent(new RotateAnimator(model, {
-    startRotation: [0, 0, 0, 1],
-    endRotation: [0.7071, 0, 0.7071, 0],
-    duration: 5,
-    loop: true,
-}));*/
 
 const light = new Node();
 light.addComponent(new Transform({
