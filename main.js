@@ -6,6 +6,7 @@ import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
 import { OrbitController } from './common/engine/controllers/OrbitController.js';
 import { RotateAnimator } from './common/engine/animators/RotateAnimator.js';
 import { LinearAnimator } from './common/engine/animators/LinearAnimator.js';
+import { JumpAnimator } from './common/engine/animators/JumpAnimator.js'; // Import the JumpAnimator class
 
 import {
     Camera,
@@ -32,7 +33,27 @@ camera.addComponent(new OrbitController(camera, document.body, {
 }));
 
 const model = scene.find(node => node.getComponentOfType(Model));
+const jumpAnimator = new JumpAnimator(model /* assuming 'model' is the node you want to animate */, /* specify jumpHeight and jumpDuration */);
 
+document.addEventListener('keydown', (event) => {
+    if (event.code == 'Space') {
+        jumpAnimator.startJump();
+    }
+});
+
+function updateScene(time, dt) {
+    scene.traverse(node => {
+        for (const component of node.components) {
+            component.update?.(time, dt);
+        }
+    });
+
+    jumpAnimator.update(); // Update the jump animation
+}
+
+function render() {
+    renderer.render(scene, camera);
+}
 
 const light = new Node();
 light.addComponent(new Transform({
@@ -41,29 +62,11 @@ light.addComponent(new Transform({
 light.addComponent(new Light({
     ambient: 0.3,
 }));
-/*light.addComponent(new LinearAnimator(light, {
-    startPosition: [3, 3, 3],
-    endPosition: [-3, -3, -3],
-    duration: 1,
-    loop: true,
-}));*/
 scene.addChild(light);
-
-function update(time, dt) {
-    scene.traverse(node => {
-        for (const component of node.components) {
-            component.update?.(time, dt);
-        }
-    });
-}
-
-function render() {
-    renderer.render(scene, camera);
-}
 
 function resize({ displaySize: { width, height }}) {
     camera.getComponentOfType(Camera).aspect = width / height;
 }
 
 new ResizeSystem({ canvas, resize }).start();
-new UpdateSystem({ update, render }).start();
+new UpdateSystem({ update: updateScene, render: render }).start(); // Use updateScene as the update function and render as the render function
