@@ -49,11 +49,24 @@ document.addEventListener('keydown', async (event) => {
             const transform = newModel.getComponentOfType(Transform);
 
             // Generate random positions for x, y, z within a specific range
-            const randomX = Math.random() * 20 - 10; // Adjust these ranges as needed
-    
+            var randomX = Math.random() * 15; // Adjust these ranges as needed
+            var randomY = Math.random() * 15;
+            var randomZ = Math.random() * 15;
+            const sign1 = Math.floor(Math.random() * 2)
+            const sign2 = Math.floor(Math.random() * 2)
+            const sign3 = Math.floor(Math.random() * 2)
 
+            if (sign1 % 2 == 0) {
+                randomX *= -1
+            }
+            if (sign2 % 2 == 0) {
+                randomY *= -1
+            }
+            if (sign3 % 2 == 0) {
+                randomZ *= -1
+            }
             // Set the position of the new model randomly on the screen
-            transform.translation = [randomX, 50, 0];
+            transform.translation = [randomX, randomY, randomZ];
             transform.scale = [0.2, 0.2, 0.2]; // Change the scale to make sure it's visible
 
             // Log the new model's properties for debugging
