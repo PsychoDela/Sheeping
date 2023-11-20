@@ -1,20 +1,16 @@
 import { ResizeSystem } from './common/engine/systems/ResizeSystem.js';
 import { UpdateSystem } from './common/engine/systems/UpdateSystem.js';
-
 import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
-
 import { OrbitController } from './common/engine/controllers/OrbitController.js';
 import { RotateAnimator } from './common/engine/animators/RotateAnimator.js';
 import { LinearAnimator } from './common/engine/animators/LinearAnimator.js';
-import { JumpAnimator } from './common/engine/animators/JumpAnimator.js'; // Import the JumpAnimator class
-
+import { JumpAnimator } from './common/engine/animators/JumpAnimator.js';
 import {
     Camera,
     Model,
     Node,
     Transform,
 } from './common/engine/core.js';
-
 import { Renderer } from './Renderer.js';
 import { Light } from './Light.js';
 
@@ -36,10 +32,13 @@ const model = scene.find(node => node.getComponentOfType(Model));
 const jumpAnimator = new JumpAnimator(model);
 
 document.addEventListener('keydown', async (event) => {
-    if (event.code == 'Space') {
+    if (event.code === 'Space') {
         jumpAnimator.startJump();
-    } 
-    else if (event.key == 'z' || event.key == 'Z') { // Checking for 'Z' key press
+    }
+});
+
+document.addEventListener('mousedown', async (event) => {
+    if (event.button === 0) {
         try {
             const newModelLoader = new GLTFLoader();
             await newModelLoader.load('common/models/Gear1.gltf');
@@ -49,9 +48,9 @@ document.addEventListener('keydown', async (event) => {
             const transform = newModel.getComponentOfType(Transform);
 
             // Generate random positions for x, y, z within a specific range
-            var randomX = Math.random() * 15; // Adjust these ranges as needed
-            var randomY = Math.random() * 15;
-            var randomZ = Math.random() * 15;
+            var randomX = Math.random() * 5; // Adjust these ranges as needed
+            var randomY = Math.random() * 5;
+            var randomZ = Math.random() * 5;
             const sign1 = Math.floor(Math.random() * 2)
             const sign2 = Math.floor(Math.random() * 2)
             const sign3 = Math.floor(Math.random() * 2)
@@ -70,16 +69,13 @@ document.addEventListener('keydown', async (event) => {
             transform.scale = [0.2, 0.2, 0.2]; // Change the scale to make sure it's visible
 
             // Log the new model's properties for debugging
-            console.log('New Model Properties:', transform);
-
+            console.log('New Model Properties:', transform);   
             scene.addChild(newModelScene);
         } catch (error) {
             console.error('Error loading Gear1 model:', error);
         }
     }
 });
-
-
 
 function updateScene(time, dt) {
     scene.traverse(node => {
@@ -88,7 +84,7 @@ function updateScene(time, dt) {
         }
     });
 
-    jumpAnimator.update(); // Update the jump animation
+    jumpAnimator.update();
 }
 
 function render() {
@@ -109,4 +105,4 @@ function resize({ displaySize: { width, height }}) {
 }
 
 new ResizeSystem({ canvas, resize }).start();
-new UpdateSystem({ update: updateScene, render: render }).start(); // Use updateScene as the update function and render as the render function
+new UpdateSystem({ update: updateScene, render: render }).start();
