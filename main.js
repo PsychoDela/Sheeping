@@ -119,31 +119,59 @@ function resize({ displaySize: { width, height }}) {
 
 new ResizeSystem({ canvas, resize }).start();
 new UpdateSystem({ update: updateScene, render: render }).start(); // Use updateScene as the update function and render as the render function
+// Helper function to create a quaternion from axis and angle
+function quaternionFromAxisAngle(axis, angle) {
+    const halfAngle = angle * 0.5;
+    const s = Math.sin(halfAngle);
+    return [axis[0] * s, axis[1] * s, axis[2] * s, Math.cos(halfAngle)];
+}
+
+// Helper function to multiply quaternions
+function multiplyQuaternions(q1, q2) {
+    const result = [];
+    result[0] = q1[3] * q2[0] + q1[0] * q2[3] + q1[1] * q2[2] - q1[2] * q2[1];
+    result[1] = q1[3] * q2[1] + q1[1] * q2[3] + q1[2] * q2[0] - q1[0] * q2[2];
+    result[2] = q1[3] * q2[2] + q1[2] * q2[3] + q1[0] * q2[1] - q1[1] * q2[0];
+    result[3] = q1[3] * q2[3] - q1[0] * q2[0] - q1[1] * q2[1] - q1[2] * q2[2];
+    return result;
+}
 
 document.addEventListener('keydown', (event) => {
-    var current = camera.getComponentOfType(Transform).translation
+    const cameraTransform = camera.getComponentOfType(Transform);
+    const current = cameraTransform.translation;
+    const rotation = cameraTransform.rotation;
+
     switch (event.key) {
         case 'w':
         case 'W':
-            current[2] += 5;
-            camera.getComponentOfType(Transform).translation = current;
+            current[2] -= 5;
             break;
         case 'a':
         case 'A':
-            current[0] += 5;
-            camera.getComponentOfType(Transform).translation = current;
+            current[0] -= 5;
             break;
         case 's':
         case 'S':
-            current[2] -= 5;
-            camera.getComponentOfType(Transform).translation = current;
+            current[2] += 5;
             break;
         case 'd':
         case 'D':
-            current[0] -= 5;
-            camera.getComponentOfType(Transform).translation = current;
+            current[0] += 5;
+            break;
+        case 'q':
+        case 'Q':
+            const rotationLeft = quaternionFromAxisAngle([0, 1, 0], 5*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
+            cameraTransform.rotation = multiplyQuaternions(rotation, rotationLeft);
+            break;
+        case 'e':
+        case 'E':
+            const rotationRight = quaternionFromAxisAngle([0, 1, 0], -5*Math.PI / 180); // Rotate right by an angle (in radians), e.g., 1 degree here
+            cameraTransform.rotation = multiplyQuaternions(rotation, rotationRight);
             break;
         default:
             break;
     }
+
+    cameraTransform.translation = current;
 });
+
