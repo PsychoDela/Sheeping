@@ -53,7 +53,7 @@ document.addEventListener('mousedown', async (event) => {
     if (event.button === 0) { 
         try {
             const newModelLoader = new GLTFLoader();
-            await newModelLoader.load('common/models/scene.gltf');
+            await newModelLoader.load('common/models/coin.gltf');
 
             const newModelScene = newModelLoader.loadScene(newModelLoader.defaultScene);
             const newModel = newModelScene.find(node => node.getComponentOfType(Model));
@@ -98,8 +98,18 @@ function updateScene(time, dt) {
     });
 
     jumpAnimator.update(); // Update the jump animation
-}
 
+    // Rotate the gear model continuously around its own axis
+    var rotationSpeed = 0.5; // Adjust the speed of rotation as needed
+    const modelNode = scene.find(node => node.getComponentOfType(Model));
+    if (modelNode) {
+        const rotation = modelNode.getComponentOfType(Transform).rotation;
+        const rotationAxis = [0, 1, 0]; // Assuming rotation around the y-axis
+        const rotationAngle = rotationSpeed * dt; // Adjusting rotation by time
+        const rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
+        modelNode.getComponentOfType(Transform).rotation = multiplyQuaternions(rotation, rotationQuaternion);
+    }
+}
 function render() {
     renderer.render(scene, camera);
 }
