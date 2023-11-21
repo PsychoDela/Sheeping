@@ -78,10 +78,15 @@ document.addEventListener('mousedown', async (event) => {
             }
             // Set the position of the new model randomly on the screen
             transform.translation = [randomX * 50, randomY * 50, randomZ * 50];
-            transform.scale = [50, 50, 50]; // Change the scale to make sure it's visible
-            const rotation = transform.rotation;
-            // Log the new model's properties for debugging
-            console.log('New Model Properties:', transform);
+            transform.scale = [75, 75, 75]; // Change the scale to make sure it's visible
+            const rotationSpeed = 2; // Adjust rotation speed as needed
+            setInterval(() => {
+                const currentRotation = newModel.getComponentOfType(Transform).rotation;
+                const rotationAxis = [1, 1, 1]; // Assuming rotation around the y-axis
+                const rotationAngle = rotationSpeed * (Math.PI / 180); // Convert degrees to radians
+                const rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
+                newModel.getComponentOfType(Transform).rotation = multiplyQuaternions(currentRotation, rotationQuaternion);
+            }, 16); // 60 frames per second
 
             scene.addChild(newModelScene);
         } catch (error) {
@@ -110,6 +115,9 @@ function updateScene(time, dt) {
         modelNode.getComponentOfType(Transform).rotation = multiplyQuaternions(rotation, rotationQuaternion);
     }
 }
+
+
+
 function render() {
     renderer.render(scene, camera);
 }

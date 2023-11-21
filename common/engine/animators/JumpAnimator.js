@@ -13,7 +13,6 @@ export class JumpAnimator {
     }
 
     startJump() {
-        console.log('Start Jump called'); // Check if this log appears when triggering the jump
     
         if (!this.jumping) {
             this.jumping = true;
@@ -22,7 +21,6 @@ export class JumpAnimator {
     }
 
     update() {
-        console.log('Update Jump called');
         if (this.jumping) {
             const currentTime = performance.now();
             const elapsed = (currentTime - this.startTime) / 1000; // Convert to seconds
