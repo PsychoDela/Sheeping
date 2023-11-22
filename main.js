@@ -19,6 +19,8 @@ import {
 import { Renderer } from './Renderer.js';
 import { Light } from './Light.js';
 
+var coins_count = 0;
+
 const canvas = document.querySelector('canvas');
 const renderer = new Renderer(canvas);
 await renderer.initialize();
@@ -89,6 +91,8 @@ document.addEventListener('mousedown', async (event) => {
             }, 16); // 60 frames per second
 
             scene.addChild(newModelScene);
+            coins_count = coins_count + 1;
+            updateCoins();
         } catch (error) {
             console.error('Error loading Gear1 model:', error);
         }
@@ -192,4 +196,8 @@ document.addEventListener('keydown', (event) => {
 
     cameraTransform.translation = current;
 });
+
+function updateCoins() {
+    document.querySelector(".counter").innerHTML = coins_count + ' <img src="coins-solid.svg">'; 
+}
 
