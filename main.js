@@ -116,8 +116,6 @@ function updateScene(time, dt) {
     }
 }
 
-
-
 function render() {
     renderer.render(scene, camera);
 }
