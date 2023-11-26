@@ -55,7 +55,7 @@ document.addEventListener('keydown', async (event) => {
 })
 
 document.addEventListener('mousedown', async (event) => {
-    if (event.button === 0) { 
+    if (event.button === 0) {
         try {
             const newModelLoader = new GLTFLoader();
             await newModelLoader.load('common/models/coin.gltf');
@@ -65,40 +65,44 @@ document.addEventListener('mousedown', async (event) => {
             const transform = newModel.getComponentOfType(Transform);
 
             // Generate random positions for x, y, z within a specific range
-            var randomX = Math.random() * 15; // Adjust these ranges as needed
-            var randomY = Math.random() * 15;
-            var randomZ = Math.random() * 15;
-            const sign1 = Math.floor(Math.random() * 2)
-            const sign2 = Math.floor(Math.random() * 2)
-            const sign3 = Math.floor(Math.random() * 2)
+            var randomX = (Math.random() - 0.5) * 15; // Adjust these ranges as needed
+            var randomZ = (Math.random() - 0.5) * 15;
 
-            if (sign1 % 2 == 0) {
-                randomX *= -1
-            }
-            if (sign2 % 2 == 0) {
-                randomY *= -1
-            }
-            if (sign3 % 2 == 0) {
-                randomZ *= -1
-            }
-            // Set the position of the new model randomly on the screen
+            // Set the initial position of the new model
             transform.scale = [75, 75, 75]; // Change the scale to make sure it's visible
-            transform.translation = [randomX * 50, randomY * 50, randomZ * 50];
-            
-            const rotationSpeed = 1; // Adjust rotation speed as needed
-            setInterval(() => {
-                const currentRotation = newModel.getComponentOfType(Transform).rotation;
-                const rotationAxis = [1, 1, 0]; // Assuming rotation around the y-axis
-                const rotationAngle = rotationSpeed * (Math.PI / 180); // Convert degrees to radians
-                const rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
-                newModel.getComponentOfType(Transform).rotation = multiplyQuaternions(currentRotation, rotationQuaternion);
-            }, 16); // 60 frames per second
+            transform.translation = [randomX * 50, 50, randomZ * 50]; // Starts higher up
 
+            var rotationAxis = [1, 0, 0]; // Y-axis
+            var rotationAngle = Math.PI+1;
+            var rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
+            transform.rotation = multiplyQuaternions(transform.rotation, rotationQuaternion);
+
+
+            // Add the new model to the scene
             scene.addChild(newModelScene);
             coins_count = coins_count + 1;
             updateCoins();
+
+            console.log(transform.translation[1]);
+
+            // Falling animation towards a certain Y position
+            const targetX = transform.translation[0]+500; // Adjust the target Y position
+            const fallingSpeed = 10; // Adjust falling speed as needed
+
+            const fallInterval = setInterval(() => {
+                
+                if (transform.translation[0] < targetX) {
+                    console.log(transform.translation[1]);
+                    transform.translation[0] += fallingSpeed;
+                } else {
+                    clearInterval(fallInterval);
+                    scene.removeChild(newModelScene); // Remove the coin when it reaches the target Y position
+                    coins_count -= 1; // Decrease coin count as it's removed
+                    updateCoins();
+                }
+            }, 16); // 60 frames per second
         } catch (error) {
-            console.error('Error loading Gear1 model:', error);
+            console.error('Error loading coin model:', error);
         }
     }
 });
@@ -202,4 +206,3 @@ document.addEventListener('keydown', (event) => {
 function updateCoins() {
     document.querySelector(".counter").innerHTML = coins_count + ' <img src="coins-solid.svg">'; 
 }
-
