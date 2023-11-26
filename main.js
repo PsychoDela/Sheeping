@@ -2,6 +2,7 @@ import { ResizeSystem } from './common/engine/systems/ResizeSystem.js';
 import { UpdateSystem } from './common/engine/systems/UpdateSystem.js';
 
 import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
+import { OBJLoader } from './common/engine/loaders/OBJLoader.js'
 
 import { OrbitController } from './common/engine/controllers/OrbitController.js';
 import { FirstPersonController } from './common/engine/controllers/FirstPersonController.js';
@@ -27,6 +28,8 @@ await renderer.initialize();
 
 const gltfLoader = new GLTFLoader();
 await gltfLoader.load('common/models/Gear1.gltf');
+const objLoader = new OBJLoader();
+await objLoader.loadMesh('common/models/sheep.obj');
 
 const scene = gltfLoader.loadScene(gltfLoader.defaultScene);
 
@@ -79,12 +82,13 @@ document.addEventListener('mousedown', async (event) => {
                 randomZ *= -1
             }
             // Set the position of the new model randomly on the screen
-            transform.translation = [randomX * 50, randomY * 50, randomZ * 50];
             transform.scale = [75, 75, 75]; // Change the scale to make sure it's visible
-            const rotationSpeed = 2; // Adjust rotation speed as needed
+            transform.translation = [randomX * 50, randomY * 50, randomZ * 50];
+            
+            const rotationSpeed = 1; // Adjust rotation speed as needed
             setInterval(() => {
                 const currentRotation = newModel.getComponentOfType(Transform).rotation;
-                const rotationAxis = [1, 1, 1]; // Assuming rotation around the y-axis
+                const rotationAxis = [1, 1, 0]; // Assuming rotation around the y-axis
                 const rotationAngle = rotationSpeed * (Math.PI / 180); // Convert degrees to radians
                 const rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
                 newModel.getComponentOfType(Transform).rotation = multiplyQuaternions(currentRotation, rotationQuaternion);
