@@ -21,6 +21,7 @@ import { Renderer } from './Renderer.js';
 import { Light } from './Light.js';
 
 var coins_count = 0;
+var click_count = 0;
 
 const canvas = document.querySelector('canvas');
 const renderer = new Renderer(canvas);
@@ -55,7 +56,9 @@ document.addEventListener('keydown', async (event) => {
 })
 
 document.addEventListener('mousedown', async (event) => {
-    if (event.button === 0) {
+    click_count++;
+    if (event.button === 0 && click_count == 5) {
+        click_count = 0;
         try {
             const newModelLoader = new GLTFLoader();
             await newModelLoader.load('common/models/coin.gltf');
@@ -77,27 +80,22 @@ document.addEventListener('mousedown', async (event) => {
             var rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
             transform.rotation = multiplyQuaternions(transform.rotation, rotationQuaternion);
 
-
             // Add the new model to the scene
             scene.addChild(newModelScene);
             coins_count = coins_count + 1;
             updateCoins();
 
-            console.log(transform.translation[1]);
-
             // Falling animation towards a certain Y position
-            const targetX = transform.translation[0]+500; // Adjust the target Y position
+            const targetX = transform.translation[0]+300; // Adjust the target Y position
             const fallingSpeed = 10; // Adjust falling speed as needed
 
             const fallInterval = setInterval(() => {
                 
                 if (transform.translation[0] < targetX) {
-                    console.log(transform.translation[1]);
                     transform.translation[0] += fallingSpeed;
                 } else {
                     clearInterval(fallInterval);
                     scene.removeChild(newModelScene); // Remove the coin when it reaches the target Y position
-                    coins_count -= 1; // Decrease coin count as it's removed
                     updateCoins();
                 }
             }, 16); // 60 frames per second
