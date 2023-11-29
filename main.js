@@ -57,7 +57,7 @@ document.addEventListener('keydown', async (event) => {
 
 document.addEventListener('mousedown', async (event) => {
     click_count++;
-    if (event.button === 0 && click_count == 5) {
+    if (event.button === 0) {
         click_count = 0;
         try {
             const newModelLoader = new GLTFLoader();
@@ -67,6 +67,21 @@ document.addEventListener('mousedown', async (event) => {
             const newModel = newModelScene.find(node => node.getComponentOfType(Model));
             const transform = newModel.getComponentOfType(Transform);
 
+               // Reduce the scale of the gear model on click
+               const gearModel = scene.find(node => node.getComponentOfType(Model));
+              if (gearModel) {
+                   const gearTransform = gearModel.getComponentOfType(Transform);
+                   gearTransform.scale = gearTransform.scale.map(value => value * 0.9);
+                   
+               }
+
+               if (gearModel) {
+                const gearMaterial = gearModel.getComponentOfType(Model).primitives[0].material;
+                console.log(gearMaterial)
+                if (gearMaterial) {
+                    gearMaterial.baseFactor = [1, 0, 0,1]; // Setting color to red [R, G, B], in this case pure red
+                }
+            }
             // Generate random positions for x, y, z within a specific range
             var randomX = (Math.random() - 0.5) * 15; // Adjust these ranges as needed
             var randomZ = (Math.random() - 0.5) * 15;
