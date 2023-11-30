@@ -24,6 +24,8 @@ var coins_count = 1000;
 var click_count = 0;
 var current_color = [1, 1, 1, 1]
 
+updateCoins()
+
 const canvas = document.querySelector('canvas');
 const renderer = new Renderer(canvas);
 await renderer.initialize();
@@ -218,10 +220,6 @@ document.addEventListener('keydown', (event) => {
 
 function updateCoins() {
     document.querySelector(".counter").innerHTML = coins_count + ' <img src="coins-solid.svg">'; 
-}
-
-function buy(num) {
-    alert("op op");
 }
 
 var price = 0;
