@@ -20,8 +20,9 @@ import {
 import { Renderer } from './Renderer.js';
 import { Light } from './Light.js';
 
-var coins_count = 0;
+var coins_count = 1000;
 var click_count = 0;
+var current_color = [1, 1, 1, 1]
 
 const canvas = document.querySelector('canvas');
 const renderer = new Renderer(canvas);
@@ -57,7 +58,7 @@ document.addEventListener('keydown', async (event) => {
 
 document.addEventListener('mousedown', async (event) => {
     click_count++;
-    if (event.button === 0) {
+    if (event.button === 0 && click_count == 5) {
         click_count = 0;
         try {
             const newModelLoader = new GLTFLoader();
@@ -69,17 +70,16 @@ document.addEventListener('mousedown', async (event) => {
 
                // Reduce the scale of the gear model on click
                const gearModel = scene.find(node => node.getComponentOfType(Model));
-              if (gearModel) {
+              /*if (gearModel) {
                    const gearTransform = gearModel.getComponentOfType(Transform);
-                   gearTransform.scale = gearTransform.scale.map(value => value * 0.9);
-                   
-               }
+                   gearTransform.scale = gearTransform.scale.map(value => value * 0.9);  
+               }*/
 
                if (gearModel) {
                 const gearMaterial = gearModel.getComponentOfType(Model).primitives[0].material;
-                console.log(gearMaterial)
+                //console.log(gearMaterial)
                 if (gearMaterial) {
-                    gearMaterial.baseFactor = [1, 0, 0,1]; // Setting color to red [R, G, B], in this case pure red
+                    gearMaterial.baseFactor = current_color; // Setting color to red [R, G, B], in this case pure red
                 }
             }
             // Generate random positions for x, y, z within a specific range
@@ -97,7 +97,7 @@ document.addEventListener('mousedown', async (event) => {
 
             // Add the new model to the scene
             scene.addChild(newModelScene);
-            coins_count = coins_count + 1;
+            coins_count = coins_count + Math.floor(Math.random() * 5 + 1);
             updateCoins();
 
             // Falling animation towards a certain Y position
@@ -219,3 +219,118 @@ document.addEventListener('keydown', (event) => {
 function updateCoins() {
     document.querySelector(".counter").innerHTML = coins_count + ' <img src="coins-solid.svg">'; 
 }
+
+function buy(num) {
+    alert("op op");
+}
+
+var price = 0;
+
+document.querySelector("#dugme1").addEventListener("click", (event) => {
+    price = 10;
+
+    if (coins_count >= price) {
+        current_color = [0, 1, 0, 1]
+        coins_count -= price;
+        alert("You have bought green as your color");
+        document.querySelector(".menu").style.visibility = "hidden";
+        menu_visible = false;
+    }
+
+    else {
+        alert("Not enough coins");
+    }
+})
+
+document.querySelector("#dugme2").addEventListener("click", (event) => {
+    price = 20;
+
+    if (coins_count >= price) {
+        current_color = [1, 0, 0, 1]
+        coins_count -= price;
+        alert("You have bought red as your color");
+        document.querySelector(".menu").style.visibility = "hidden";
+        menu_visible = false;
+    }
+
+    else {
+        alert("Not enough coins");
+    }
+})
+
+document.querySelector("#dugme3").addEventListener("click", (event) => {
+    price = 30;
+
+    if (coins_count >= price) {
+        current_color = [0, 0, 5, 1]
+        coins_count -= price;
+        alert("You have bought blue as your color");
+        document.querySelector(".menu").style.visibility = "hidden";
+        menu_visible = false;
+    }
+
+    else {
+        alert("Not enough coins");
+    }
+})
+
+document.querySelector("#dugme4").addEventListener("click", (event) => {
+    price = 40;
+
+    if (coins_count >= price) {
+        current_color = [5, 5, 0, 1]
+        coins_count -= price;
+        alert("You have bought yellow as your color");
+        document.querySelector(".menu").style.visibility = "hidden";
+        menu_visible = false;
+    }
+
+    else {
+        alert("Not enough coins");
+    }
+})
+
+document.querySelector("#dugme5").addEventListener("click", (event) => {
+    price = 50;
+    
+    if (coins_count >= price) {
+        current_color = [5, 0, 5, 1]
+        coins_count -= price;
+        alert("You have bought magenta as your color");
+        document.querySelector(".menu").style.visibility = "hidden";
+        menu_visible = false;
+    }
+
+    else {
+        alert("Not enough coins");
+    }
+})
+
+document.querySelector("#dugme6").addEventListener("click", (event) => {
+    price = 90;
+
+    if (coins_count >= price) {
+        current_color = [10, 30, 10, 1]
+        coins_count -= price;
+        alert("You have bought super green as your color");
+        document.querySelector(".menu").style.visibility = "hidden";
+        menu_visible = false;
+    }
+
+    else {
+        alert("Not enough coins");
+    }
+})
+
+var menu_visible = false;
+
+document.querySelector("#menu").addEventListener("click", (event) => {
+    if (menu_visible) {
+        document.querySelector(".menu").style.visibility = "hidden";
+        menu_visible = false;
+    }
+    else {
+        document.querySelector(".menu").style.visibility = "visible";
+        menu_visible = true;
+    }
+})
