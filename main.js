@@ -2,7 +2,6 @@ import { ResizeSystem } from './common/engine/systems/ResizeSystem.js';
 import { UpdateSystem } from './common/engine/systems/UpdateSystem.js';
 
 import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
-import { OBJLoader } from './common/engine/loaders/OBJLoader.js'
 
 import { OrbitController } from './common/engine/controllers/OrbitController.js';
 import { FirstPersonController } from './common/engine/controllers/FirstPersonController.js';
@@ -31,9 +30,7 @@ const renderer = new Renderer(canvas);
 await renderer.initialize();
 
 const gltfLoader = new GLTFLoader();
-await gltfLoader.load('common/models/Gear1.gltf');
-const objLoader = new OBJLoader();
-await objLoader.loadMesh('common/models/sheep.obj');
+await gltfLoader.load('common/models/sheepies.gltf');
 
 const scene = gltfLoader.loadScene(gltfLoader.defaultScene);
 
