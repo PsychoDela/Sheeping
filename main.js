@@ -96,18 +96,17 @@ document.addEventListener('mousedown', async (event) => {
 
                if (gearModel) {
                 const gearMaterial = gearModel.getComponentOfType(Model).primitives[0].material;
-                //console.log(gearMaterial)
                 if (gearMaterial) {
-                    gearMaterial.baseFactor = current_color; // Setting color to red [R, G, B], in this case pure red
+                    gearMaterial.baseFactor = current_color;
                 }
             }
             // Generate random positions for x, y, z within a specific range
-            var randomX = (Math.random()) * 10; // Adjust these ranges as needed
-            var randomY = (Math.random()) * 5
+            var randomX = (Math.random()) * 25; // Adjust these ranges as needed
+            var randomY = (Math.random()) * 10
             var randomZ = (Math.random()) * 10;
 
-            var sign1 = Math.floor(Math.random * 2)
-            var sign2 = Math.floor(Math.random * 2)
+            var sign1 = Math.floor(Math.random() * 2)
+            var sign2 = Math.floor(Math.random() * 2)
 
             if (sign1 % 2 == 0) {
                 randomX *= -1
@@ -123,10 +122,12 @@ document.addEventListener('mousedown', async (event) => {
             transform.scale = [2, 2, 2]; // Change the scale to make sure it's visible
             transform.translation = [0 + randomX, randomY, 15 + randomZ]; // Starts higher up
 
-            var rotationAxis = [1, 0, 0]; // Y-axis
+            console.log(randomX, randomY, randomZ)
+
+            /*var rotationAxis = [1, 0, 0]; // Y-axis
             var rotationAngle = Math.PI+1;
             var rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
-            transform.rotation = multiplyQuaternions(transform.rotation, rotationQuaternion);
+            transform.rotation = multiplyQuaternions(transform.rotation, rotationQuaternion);*/
 
             // Add the new model to the scene
             scene.addChild(newModel);
@@ -134,8 +135,8 @@ document.addEventListener('mousedown', async (event) => {
             updateCoins();
 
             // Falling animation towards a certain Y position
-            const targetX = transform.translation[1]-5; // Adjust the target Y position
-            const fallingSpeed = 0.1; // Adjust falling speed as needed
+            const targetX = transform.translation[1]-50; // Adjust the target Y position
+            const fallingSpeed = 0.001; // Adjust falling speed as needed
 
             /*const fallInterval = setInterval(() => {
                 
