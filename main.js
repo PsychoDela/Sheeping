@@ -45,8 +45,28 @@ camera.addComponent(new Camera({
 }));
 
 const model = scene.find(node => node.getComponentOfType(Model));
-model.scale = [100, 100, 100]
 const jumpAnimator = new JumpAnimator(model);
+
+const sheepTransform = model.getComponentOfType(Transform);
+sheepTransform.scale = [7,7,7];
+sheepTransform.translation = [0,-10,15];
+
+
+const terrainLoader = new GLTFLoader();
+await terrainLoader.load('common/models/terrain.gltf');
+
+const terrainScene = terrainLoader.loadScene(terrainLoader.defaultScene);
+const terrainModel = terrainScene.find(node => node.getComponentOfType(Model));
+
+
+const terrainTransform = terrainModel.getComponentOfType(Transform);
+terrainTransform.translation[1] -= 30;
+
+
+// Add the terrain model to the scene behind the sheep model
+// Adjust the order of adding models to ensure the terrain is behind the sheep
+scene.addChild(terrainScene);
+
 
 
 document.addEventListener('keydown', async (event) => {
@@ -87,7 +107,7 @@ document.addEventListener('mousedown', async (event) => {
 
             // Set the initial position of the new model
             transform.scale = [75, 75, 75]; // Change the scale to make sure it's visible
-            transform.translation = [randomX * 50, 50, randomZ * 50]; // Starts higher up
+            transform.translation = [randomX * 50 + 100, 50, randomZ * 50]; // Starts higher up
 
             var rotationAxis = [1, 0, 0]; // Y-axis
             var rotationAngle = Math.PI+1;
