@@ -87,23 +87,22 @@ document.addEventListener('mousedown', async (event) => {
                
             const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
             sheepMaterial.baseFactor = current_color;
-            
-    
-            // Generate random positions for x, y, z within a specific range
-            var randomX = (Math.random()) * 25; // Adjust these ranges as needed
+
+            var randomX = (Math.random()) * 25 + 5; // Adjust these ranges as needed
             var randomY = (Math.random()) * 10
             var randomZ = (Math.random()) * 10;
 
             var sign1 = Math.floor(Math.random() * 2)
             var sign2 = Math.floor(Math.random() * 2)
+            var sign3 = Math.floor(Math.random() * 2)
 
             if (sign1 % 2 == 0) {
                 randomX *= -1
             }
-            if (sign1 % 2 == 0) {
+            if (sign2 % 2 == 0) {
                 randomY *= -1
             }
-            if (sign2 % 2 == 0) {
+            if (sign3 % 2 == 0) {
                 randomZ *= -1
             }
 
