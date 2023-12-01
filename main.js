@@ -45,7 +45,6 @@ camera.addComponent(new Camera({
 }));
 
 const model = scene.find(node => node.getComponentOfType(Model));
-//const jumpAnimator = new JumpAnimator(model);
 
 const sheepTransform = model.getComponentOfType(Transform);
 sheepTransform.scale = [7,7,7];
@@ -62,9 +61,6 @@ const terrainModel = terrainScene.find(node => node.getComponentOfType(Model));
 const terrainTransform = terrainModel.getComponentOfType(Transform);
 terrainTransform.translation[1] -= 30;
 
-
-// Add the terrain model to the scene behind the sheep model
-// Adjust the order of adding models to ensure the terrain is behind the sheep
 scene.addChild(terrainScene);
 
 
@@ -86,20 +82,13 @@ document.addEventListener('mousedown', async (event) => {
             const newModelScene = newModelLoader.loadScene(newModelLoader.defaultScene);
             const newModel = newModelScene.find(node => node.getComponentOfType(Model));
             const transform = newModel.getComponentOfType(Transform);
-
-               // Reduce the scale of the gear model on click
-               const gearModel = scene.find(node => node.getComponentOfType(Model));
-              /*if (gearModel) {
-                   const gearTransform = gearModel.getComponentOfType(Transform);
-                   gearTransform.scale = gearTransform.scale.map(value => value * 0.9);  
-               }*/
-
-               if (gearModel) {
-                const gearMaterial = gearModel.getComponentOfType(Model).primitives[0].material;
-                if (gearMaterial) {
-                    gearMaterial.baseFactor = current_color;
-                }
-            }
+ 
+            sheepTransform.scale = sheepTransform.scale.map(value => value * 0.9);  
+               
+            const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
+            sheepMaterial.baseFactor = current_color;
+            
+    
             // Generate random positions for x, y, z within a specific range
             var randomX = (Math.random()) * 25; // Adjust these ranges as needed
             var randomY = (Math.random()) * 10
@@ -163,7 +152,7 @@ function updateScene(time, dt) {
 
     //jumpAnimator.update(); // Update the jump animation
 
-    // Rotate the gear model continuously around its own axis
+    // Rotate the sheep model continuously around its own axis
     var rotationSpeed = 0.5; // Adjust the speed of rotation as needed
     const modelNode = scene.find(node => node.getComponentOfType(Model));
     if (modelNode) {
