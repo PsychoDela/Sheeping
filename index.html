@@ -3,44 +3,28 @@
 <head>
     <meta charset="utf-8">
     <title>Sheeping</title>
-    <link rel="stylesheet" href="common/css/style.css">
-    <script src="lib/gl-matrix-min.js"></script>
-    <script type="module" src="main.js"></script>
+    <link rel="stylesheet" href="common/css/homepage.css"> <!-- Your other CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your custom CSS file -->
 </head>
 <body>
-    <div class="fullscreen">
-        <span class="counter"><img src="coins-solid.svg"></span>
-        <button id="menu">MENU</button>
-        <div class="menu">
-            <ul>
-                <li>
-                    GREEN: 10 <button id="dugme1">BUY</button>
-                </li>
-                <br>
-                <li>
-                    RED : 20 <button id="dugme2">BUY</button>
-                </li>
-                <br>
-                <li>
-                    BLUE : 30 <button id="dugme3">BUY</button>
-                </li>
-                <br>
-                <li>
-                    YELLOW : 40 <button id="dugme4">BUY</button>
-                </li>
-                <br>
-                <li>
-                    MAGENTA : 50 <button id="dugme5">BUY</button>
-                </li>
-                <br>
-                <li>
-                    SUPER GREEN: 90<button id="dugme6">BUY</button>
-                </li>
-            </ul>
+    <!-- Your HTML content -->
+    <center>
+        
+        <div class="page-content page-container ct" id="page-content">
+            <h1>Sheeping</h1>
+            <div class="padding">
+                <div class="row container d-flex justify-content-center">
+                    <button type="button" id="animatebutton" class="btn btn-warning btn-icon-text animatebutton">
+                        <i class="fa fa-check btn-icon-prepend"></i> Play
+                    </button>                    
+                </div>
+            </div>
         </div>
-        <canvas></canvas>
-    </div>
+    </center>
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="homepage.js"></script>
 </body>
 </html>
-
-<script src="main.js"></script>

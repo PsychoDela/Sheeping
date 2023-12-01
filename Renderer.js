@@ -187,7 +187,7 @@ export class Renderer extends BaseRenderer {
             colorAttachments: [
                 {
                     view: this.context.getCurrentTexture().createView(),
-                    clearValue: { r: 0, g: 1, b: 0, a: 1 }, // Green color: RGBA values
+                    
                     loadOp: 'clear',
                     storeOp: 'store',
                 },

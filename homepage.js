@@ -7,9 +7,8 @@ $(document).ready(function() {
             element.removeClass('pulse'); // Remove the pulse class after 1 second
         }, 1000);
 
-        // Redirect to index.html after animation (1 second delay)
         setTimeout(function() {
-            window.location.href = 'index.html'; // Redirect to index.html
+            window.location.href = 'game.html'; 
         }, 10);
     });
 });

@@ -45,7 +45,7 @@ camera.addComponent(new Camera({
 }));
 
 const model = scene.find(node => node.getComponentOfType(Model));
-model.scale = [0.2, 0.2, 0.2]
+model.scale = [100, 100, 100]
 const jumpAnimator = new JumpAnimator(model);
 
 
