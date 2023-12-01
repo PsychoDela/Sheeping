@@ -50,7 +50,6 @@ const sheepTransform = model.getComponentOfType(Transform);
 sheepTransform.scale = [7,7,7];
 sheepTransform.translation = [0,-10,15];
 
-
 const terrainLoader = new GLTFLoader();
 await terrainLoader.load('common/models/terrain.gltf');
 
@@ -62,8 +61,6 @@ const terrainTransform = terrainModel.getComponentOfType(Transform);
 terrainTransform.translation[1] -= 30;
 
 scene.addChild(terrainScene);
-
-
 
 /*document.addEventListener('keydown', async (event) => {
     if (event.code == 'Space') {
@@ -77,20 +74,20 @@ document.addEventListener('mousedown', async (event) => {
         click_count = 0;
         try {
             const newModelLoader = new GLTFLoader();
-            await newModelLoader.load('common/models/coin.gltf');
+            await newModelLoader.load('common/models/wool.gltf');
 
             const newModelScene = newModelLoader.loadScene(newModelLoader.defaultScene);
             const newModel = newModelScene.find(node => node.getComponentOfType(Model));
             const transform = newModel.getComponentOfType(Transform);
  
-            sheepTransform.scale = sheepTransform.scale.map(value => value * 0.9);  
+            //sheepTransform.scale = sheepTransform.scale.map(value => value * 0.9);  
                
             const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
             sheepMaterial.baseFactor = current_color;
 
-            var randomX = (Math.random()) * 25 + 5; // Adjust these ranges as needed
-            var randomY = (Math.random()) * 10
-            var randomZ = (Math.random()) * 10;
+            var randomX = (Math.random()) * 3 + 2; // Adjust these ranges as needed
+            var randomY = (Math.random()) * 3
+            var randomZ = (Math.random()) * 5;
 
             var sign1 = Math.floor(Math.random() * 2)
             var sign2 = Math.floor(Math.random() * 2)
@@ -107,8 +104,8 @@ document.addEventListener('mousedown', async (event) => {
             }
 
             // Set the initial position of the new model
-            transform.scale = [1, 1, 1]; // Change the scale to make sure it's visible
-            transform.translation = [0 + randomX, randomY, 15 + randomZ]; // Starts higher up
+            transform.scale = [0.02, 0.02, 0.02]; // Change the scale to make sure it's visible
+            transform.translation = [randomX, randomY, 15 + randomZ]; // Starts higher up
 
             // Add the new model to the scene
             scene.addChild(newModel);
@@ -117,7 +114,7 @@ document.addEventListener('mousedown', async (event) => {
 
             // Falling animation towards a certain Y position
             const targetY = transform.translation[1]-9; // Adjust the target Y position
-            const fallingSpeed = 0.2; // Adjust falling speed as needed
+            const fallingSpeed = 0.05; // Adjust falling speed as needed
 
             const fallInterval = setInterval(() => {
                 
@@ -146,7 +143,7 @@ function updateScene(time, dt) {
     //jumpAnimator.update(); // Update the jump animation
 
     // Rotate the sheep model continuously around its own axis
-    var rotationSpeed = 0.5; // Adjust the speed of rotation as needed
+    var rotationSpeed = 0.8; // Adjust the speed of rotation as needed
     const modelNode = scene.find(node => node.getComponentOfType(Model));
     if (modelNode) {
         const rotation = modelNode.getComponentOfType(Transform).rotation;
@@ -163,7 +160,7 @@ function render() {
 
 const light = new Node();
 light.addComponent(new Transform({
-    translation: [3, 3, 3],
+    translation: [0, 60, 20],
 }));
 light.addComponent(new Light({
     ambient: 0.3,
