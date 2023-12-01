@@ -45,7 +45,7 @@ camera.addComponent(new Camera({
 }));
 
 const model = scene.find(node => node.getComponentOfType(Model));
-const jumpAnimator = new JumpAnimator(model);
+//const jumpAnimator = new JumpAnimator(model);
 
 const sheepTransform = model.getComponentOfType(Transform);
 sheepTransform.scale = [7,7,7];
@@ -69,11 +69,11 @@ scene.addChild(terrainScene);
 
 
 
-document.addEventListener('keydown', async (event) => {
+/*document.addEventListener('keydown', async (event) => {
     if (event.code == 'Space') {
         jumpAnimator.startJump();
     } 
-})
+})*/
 
 document.addEventListener('mousedown', async (event) => {
     click_count++;
@@ -102,12 +102,26 @@ document.addEventListener('mousedown', async (event) => {
                 }
             }
             // Generate random positions for x, y, z within a specific range
-            var randomX = (Math.random() - 0.5) * 15; // Adjust these ranges as needed
-            var randomZ = (Math.random() - 0.5) * 15;
+            var randomX = (Math.random()) * 10; // Adjust these ranges as needed
+            var randomY = (Math.random()) * 5
+            var randomZ = (Math.random()) * 10;
+
+            var sign1 = Math.floor(Math.random * 2)
+            var sign2 = Math.floor(Math.random * 2)
+
+            if (sign1 % 2 == 0) {
+                randomX *= -1
+            }
+            if (sign1 % 2 == 0) {
+                randomY *= -1
+            }
+            if (sign2 % 2 == 0) {
+                randomZ *= -1
+            }
 
             // Set the initial position of the new model
-            transform.scale = [75, 75, 75]; // Change the scale to make sure it's visible
-            transform.translation = [randomX * 50 + 100, 50, randomZ * 50]; // Starts higher up
+            transform.scale = [2, 2, 2]; // Change the scale to make sure it's visible
+            transform.translation = [0 + randomX, randomY, 15 + randomZ]; // Starts higher up
 
             var rotationAxis = [1, 0, 0]; // Y-axis
             var rotationAngle = Math.PI+1;
@@ -115,24 +129,24 @@ document.addEventListener('mousedown', async (event) => {
             transform.rotation = multiplyQuaternions(transform.rotation, rotationQuaternion);
 
             // Add the new model to the scene
-            scene.addChild(newModelScene);
+            scene.addChild(newModel);
             coins_count = coins_count + Math.floor(Math.random() * 5 + 1);
             updateCoins();
 
             // Falling animation towards a certain Y position
-            const targetX = transform.translation[0]+300; // Adjust the target Y position
-            const fallingSpeed = 10; // Adjust falling speed as needed
+            const targetX = transform.translation[1]-5; // Adjust the target Y position
+            const fallingSpeed = 0.1; // Adjust falling speed as needed
 
-            const fallInterval = setInterval(() => {
+            /*const fallInterval = setInterval(() => {
                 
-                if (transform.translation[0] < targetX) {
-                    transform.translation[0] += fallingSpeed;
+                if (transform.translation[1] < targetX) {
+                    transform.translation[1] -= fallingSpeed;
                 } else {
                     clearInterval(fallInterval);
-                    scene.removeChild(newModelScene); // Remove the coin when it reaches the target Y position
+                    scene.removeChild(newModel); // Remove the coin when it reaches the target Y position
                     updateCoins();
                 }
-            }, 16); // 60 frames per second
+            }, 16); */
         } catch (error) {
             console.error('Error loading coin model:', error);
         }
@@ -146,7 +160,7 @@ function updateScene(time, dt) {
         }
     });
 
-    jumpAnimator.update(); // Update the jump animation
+    //jumpAnimator.update(); // Update the jump animation
 
     // Rotate the gear model continuously around its own axis
     var rotationSpeed = 0.5; // Adjust the speed of rotation as needed
