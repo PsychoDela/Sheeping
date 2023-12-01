@@ -116,16 +116,15 @@ document.addEventListener('mousedown', async (event) => {
             updateCoins();
 
             // Falling animation towards a certain Y position
-            const targetY = transform.translation[1]+0.5; // Adjust the target Y position
+            const targetY = transform.translation[1]-9; // Adjust the target Y position
             const fallingSpeed = 0.2; // Adjust falling speed as needed
 
             const fallInterval = setInterval(() => {
-            console.log(targetY);
                 
-                if (transform.translation[1] < targetY) {
-                    console.log(transform.translation[1]);
+                if (transform.translation[1] > targetY) {
                     transform.translation[1] -= fallingSpeed;
-                } else {
+                } 
+                else {
                     clearInterval(fallInterval);
                     scene.removeChild(newModel); // Remove the coin when it reaches the target Y position
                     updateCoins();
