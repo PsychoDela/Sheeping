@@ -107,15 +107,8 @@ document.addEventListener('mousedown', async (event) => {
             }
 
             // Set the initial position of the new model
-            transform.scale = [2, 2, 2]; // Change the scale to make sure it's visible
+            transform.scale = [1, 1, 1]; // Change the scale to make sure it's visible
             transform.translation = [0 + randomX, randomY, 15 + randomZ]; // Starts higher up
-
-            console.log(randomX, randomY, randomZ)
-
-            /*var rotationAxis = [1, 0, 0]; // Y-axis
-            var rotationAngle = Math.PI+1;
-            var rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
-            transform.rotation = multiplyQuaternions(transform.rotation, rotationQuaternion);*/
 
             // Add the new model to the scene
             scene.addChild(newModel);
@@ -123,19 +116,21 @@ document.addEventListener('mousedown', async (event) => {
             updateCoins();
 
             // Falling animation towards a certain Y position
-            const targetX = transform.translation[1]-50; // Adjust the target Y position
-            const fallingSpeed = 0.001; // Adjust falling speed as needed
+            const targetY = transform.translation[1]+0.5; // Adjust the target Y position
+            const fallingSpeed = 0.2; // Adjust falling speed as needed
 
-            /*const fallInterval = setInterval(() => {
+            const fallInterval = setInterval(() => {
+            console.log(targetY);
                 
-                if (transform.translation[1] < targetX) {
+                if (transform.translation[1] < targetY) {
+                    console.log(transform.translation[1]);
                     transform.translation[1] -= fallingSpeed;
                 } else {
                     clearInterval(fallInterval);
                     scene.removeChild(newModel); // Remove the coin when it reaches the target Y position
                     updateCoins();
                 }
-            }, 16); */
+            }, 16); 
         } catch (error) {
             console.error('Error loading coin model:', error);
         }
