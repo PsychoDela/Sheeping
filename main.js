@@ -47,6 +47,7 @@ camera.addComponent(new Camera({
 const model = scene.find(node => node.getComponentOfType(Model));
 
 const sheepTransform = model.getComponentOfType(Transform);
+const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
 sheepTransform.scale = [7,7,7];
 sheepTransform.translation = [0,-10,15];
 
@@ -72,7 +73,7 @@ document.addEventListener('mousedown', async (event) => {
     console.log(click_count);
     click_count++;
     if (event.button === 0) {
-        if (click_count === 5) {
+        if (click_count === 7) {
             // Remove the current sheep model
             scene.removeChild(model); // Assuming "sheepModel" refers to the current sheep model
             try {
@@ -96,9 +97,7 @@ document.addEventListener('mousedown', async (event) => {
  
             sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);  
                
-            const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
-            sheepMaterial.baseFactor = current_color;
-
+    
             var randomX = (Math.random()) * 3 + 2; // Adjust these ranges as needed
             var randomY = (Math.random()) * 3
             var randomZ = (Math.random()) * 5;
@@ -245,11 +244,12 @@ document.querySelector("#dugme1").addEventListener("click", (event) => {
         alert("You have bought green as your color");
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
+        sheepMaterial.baseFactor = current_color;
     }
 
     else {
         alert("Not enough coins");
-    }
+    } 
 })
 
 document.querySelector("#dugme2").addEventListener("click", (event) => {
@@ -261,6 +261,7 @@ document.querySelector("#dugme2").addEventListener("click", (event) => {
         alert("You have bought red as your color");
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
+        sheepMaterial.baseFactor = current_color;
     }
 
     else {
@@ -272,11 +273,12 @@ document.querySelector("#dugme3").addEventListener("click", (event) => {
     price = 30;
 
     if (coins_count >= price) {
-        current_color = [0, 0, 5, 1]
+        current_color = [0, 0, 1, 1]
         coins_count -= price;
         alert("You have bought blue as your color");
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
+        sheepMaterial.baseFactor = current_color;
     }
 
     else {
@@ -288,11 +290,12 @@ document.querySelector("#dugme4").addEventListener("click", (event) => {
     price = 40;
 
     if (coins_count >= price) {
-        current_color = [5, 5, 0, 1]
+        current_color = [1, 1, 0, 1]
         coins_count -= price;
         alert("You have bought yellow as your color");
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
+        sheepMaterial.baseFactor = current_color;
     }
 
     else {
@@ -304,11 +307,12 @@ document.querySelector("#dugme5").addEventListener("click", (event) => {
     price = 50;
     
     if (coins_count >= price) {
-        current_color = [5, 0, 5, 1]
+        current_color = [1, 0, 1, 1]
         coins_count -= price;
         alert("You have bought magenta as your color");
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
+        sheepMaterial.baseFactor = current_color;
     }
 
     else {
@@ -320,11 +324,12 @@ document.querySelector("#dugme6").addEventListener("click", (event) => {
     price = 90;
 
     if (coins_count >= price) {
-        current_color = [10, 30, 10, 1]
+        current_color = [1, 2, 1, 1]
         coins_count -= price;
         alert("You have bought super green as your color");
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
+        sheepMaterial.baseFactor = current_color;
     }
 
     else {
