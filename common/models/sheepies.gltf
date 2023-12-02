@@ -66,9 +66,9 @@
 	],
 	"images":[
 		{
-			"mimeType":"image/jpeg",
+			"mimeType":"image/jpg",
 			"name":"base",
-			"uri":"base.jpg"
+			"uri":"desert_sand2_n.jpg"
 		}
 	],
 	"accessors":[

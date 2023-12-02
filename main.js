@@ -69,9 +69,23 @@ scene.addChild(terrainScene);
 })*/
 
 document.addEventListener('mousedown', async (event) => {
+    console.log(click_count);
     click_count++;
-    if (event.button === 0 && click_count == 5) {
-        click_count = 0;
+    if (event.button === 0) {
+        if (click_count === 5) {
+            // Remove the current sheep model
+            scene.removeChild(model); // Assuming "sheepModel" refers to the current sheep model
+            try {
+                scene.addChild(model);
+                sheepTransform.scale = [7,7,7];
+                coins_count = coins_count + Math.floor(Math.random() * 5 + 1);
+                updateCoins();
+
+            } catch (error) {
+                console.error('Error loading coin model:', error);
+            }
+            click_count = 0;
+        }
         try {
             const newModelLoader = new GLTFLoader();
             await newModelLoader.load('common/models/wool.gltf');
@@ -80,7 +94,7 @@ document.addEventListener('mousedown', async (event) => {
             const newModel = newModelScene.find(node => node.getComponentOfType(Model));
             const transform = newModel.getComponentOfType(Transform);
  
-            //sheepTransform.scale = sheepTransform.scale.map(value => value * 0.9);  
+            sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);  
                
             const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
             sheepMaterial.baseFactor = current_color;
@@ -139,19 +153,6 @@ function updateScene(time, dt) {
             component.update?.(time, dt);
         }
     });
-
-    //jumpAnimator.update(); // Update the jump animation
-
-    // Rotate the sheep model continuously around its own axis
-    var rotationSpeed = 0.8; // Adjust the speed of rotation as needed
-    const modelNode = scene.find(node => node.getComponentOfType(Model));
-    if (modelNode) {
-        const rotation = modelNode.getComponentOfType(Transform).rotation;
-        const rotationAxis = [0, 1, 0]; // Assuming rotation around the y-axis
-        const rotationAngle = rotationSpeed * dt; // Adjusting rotation by time
-        const rotationQuaternion = quaternionFromAxisAngle(rotationAxis, rotationAngle);
-        modelNode.getComponentOfType(Transform).rotation = multiplyQuaternions(rotation, rotationQuaternion);
-    }
 }
 
 function render() {
