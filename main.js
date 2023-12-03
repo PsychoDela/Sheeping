@@ -36,12 +36,13 @@ const scene = gltfLoader.loadScene(gltfLoader.defaultScene);
 
 const camera = new Node();
 camera.addComponent(new Transform({
-    translation: [0, 0, 50], // Setting initial translation for the "camera"
+    translation: [0, 15, 0], // Setting initial translation for the "camera"
 }));
 
 // Add a "Camera" component to the newly created node
 camera.addComponent(new Camera({
     aspect: canvas.width / canvas.height, // Set the initial aspect ratio
+    far: 1000,
 }));
 
 const model = scene.find(node => node.getComponentOfType(Model));
@@ -49,7 +50,7 @@ const model = scene.find(node => node.getComponentOfType(Model));
 const sheepTransform = model.getComponentOfType(Transform);
 const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
 sheepTransform.scale = [7,7,7];
-sheepTransform.translation = [0,-10,15];
+sheepTransform.translation = [0,0,-45];
 
 const terrainLoader = new GLTFLoader();
 await terrainLoader.load('common/models/terrain.gltf');
@@ -60,6 +61,8 @@ const terrainModel = terrainScene.find(node => node.getComponentOfType(Model));
 
 const terrainTransform = terrainModel.getComponentOfType(Transform);
 terrainTransform.translation[1] -= 30;
+terrainTransform.translation[2] -= 30;
+terrainTransform.scale = [1.1,1.1,1.1]
 
 scene.addChild(terrainScene);
 
@@ -98,7 +101,7 @@ document.addEventListener('mousedown', async (event) => {
             sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);  
                
     
-            var randomX = (Math.random()) * 3 + 2; // Adjust these ranges as needed
+            var randomX = (Math.random()) * 3 + 4; // Adjust these ranges as needed
             var randomY = (Math.random()) * 3
             var randomZ = (Math.random()) * 5;
 
@@ -118,7 +121,7 @@ document.addEventListener('mousedown', async (event) => {
 
             // Set the initial position of the new model
             transform.scale = [0.02, 0.02, 0.02]; // Change the scale to make sure it's visible
-            transform.translation = [randomX, randomY, 15 + randomZ]; // Starts higher up
+            transform.translation = [randomX, randomY + 7, 15 + randomZ - 60]; // Starts higher up
 
             // Add the new model to the scene
             scene.addChild(newModel);
