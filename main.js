@@ -86,7 +86,7 @@ document.addEventListener('mousedown', async (event) => {
                 updateCoins();
 
             } catch (error) {
-                console.error('Error loading coin model:', error);
+                console.error('Error loading model:', error);
             }
             click_count = 0;
         }
@@ -99,11 +99,11 @@ document.addEventListener('mousedown', async (event) => {
             const transform = newModel.getComponentOfType(Transform);
  
             sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);  
-               
-    
+            
+            newModel.components[1].primitives[0].material.baseFactor = current_color
             var randomX = (Math.random()) * 3 + 4; // Adjust these ranges as needed
             var randomY = (Math.random()) * 3
-            var randomZ = (Math.random()) * 5;
+            var randomZ = (Math.random()) * 8;
 
             var sign1 = Math.floor(Math.random() * 2)
             var sign2 = Math.floor(Math.random() * 2)
