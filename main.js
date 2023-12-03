@@ -66,14 +66,8 @@ terrainTransform.scale = [1.1,1.1,1.1]
 
 scene.addChild(terrainScene);
 
-/*document.addEventListener('keydown', async (event) => {
-    if (event.code == 'Space') {
-        jumpAnimator.startJump();
-    } 
-})*/
-
 document.addEventListener('mousedown', async (event) => {
-    console.log(click_count);
+    
     click_count++;
     if (event.button === 0) {
         if (click_count === 7) {
@@ -129,12 +123,12 @@ document.addEventListener('mousedown', async (event) => {
             updateCoins();
 
             // Falling animation towards a certain Y position
-            const targetY = transform.translation[1]-9; // Adjust the target Y position
+            const targetY = 2; // Adjust the target Y position
             const fallingSpeed = 0.05; // Adjust falling speed as needed
-
+        
             const fallInterval = setInterval(() => {
                 
-                if (transform.translation[1] > targetY) {
+                if (transform.translation[1] > targetY || transform.translation[1] > sheepTransform[1]-10) {
                     transform.translation[1] -= fallingSpeed;
                 } 
                 else {
