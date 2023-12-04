@@ -49,8 +49,10 @@ const model = scene.find(node => node.getComponentOfType(Model));
 
 const sheepTransform = model.getComponentOfType(Transform);
 const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
-sheepTransform.scale = [7,7,7];
-sheepTransform.translation = [0,0,-45];
+sheepTransform.scale = [5,5,5];
+sheepTransform.translation = [4,0,-45];
+const rotationLeft1 = quaternionFromAxisAngle([0, 1, 0], -50*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
+sheepTransform.rotation = multiplyQuaternions(sheepTransform.rotation, rotationLeft1);
 
 const terrainLoader = new GLTFLoader();
 await terrainLoader.load('common/models/terrain.gltf');
