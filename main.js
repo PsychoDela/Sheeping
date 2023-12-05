@@ -1,5 +1,6 @@
 import { ResizeSystem } from './common/engine/systems/ResizeSystem.js';
 import { UpdateSystem } from './common/engine/systems/UpdateSystem.js';
+import { LinearAnimator } from './common/engine/animators/LinearAnimator.js';
 
 import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
 
@@ -38,6 +39,24 @@ camera.addComponent(new Camera({
     aspect: canvas.width / canvas.height, // Set the initial aspect ratio
     far: 1000,
 }));
+
+camera.addComponent(new LinearAnimator(camera, {
+    startPosition: [-20, 7, -20],
+    endPosition: [-1, 7, 10],
+    duration: 3,
+    loop: false
+}));
+
+camera.addComponent(new LinearAnimator(camera, {
+    startPosition: [0, 7, 10],
+    endPosition: [20, 7, 20],
+    duration: 3,
+    loop: false,
+}));
+
+camera.components[2].play()
+camera.components[3].pause()
+console.log(camera.components)
 
 const model = scene.find(node => node.getComponentOfType(Model));
 
@@ -141,6 +160,17 @@ document.addEventListener('mousedown', async (event) => {
 });
 
 function updateScene(time, dt) {
+    if (camera.components[0].translation = [-1, 7, 10]) {
+        camera.components[2].pause()
+        camera.components[3].play()
+    }
+    else if (camera.components[0].translation = [0, 7, 10]) {
+        camera.components[3].pause()
+        camera.components[2].play()
+    }
+
+    camera.components[2].update(time, dt)
+    camera.components[3].update(time, dt)
     scene.traverse(node => {
         for (const component of node.components) {
             component.update?.(time, dt);
