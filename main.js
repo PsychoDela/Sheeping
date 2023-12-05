@@ -2,6 +2,7 @@ import { ResizeSystem } from './common/engine/systems/ResizeSystem.js';
 import { UpdateSystem } from './common/engine/systems/UpdateSystem.js';
 import { LinearAnimator } from './common/engine/animators/LinearAnimator.js';
 import { CircularAnimator } from './common/engine/animators/CircularAnimator.js';
+import { RotateAnimator } from './common/engine/animators/RotateAnimator.js'
 
 import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
 
@@ -44,13 +45,21 @@ camera.addComponent(new Camera({
 camera.addComponent(new CircularAnimator(
     camera,
     {
-        center: [0,7,0],
-        radius: 20,
+        center: [0,7,-45],
+        radius: 25,
         duration: 10,
         loop: true,
         endAngle: 2 * Math.PI
     }
 ))
+
+camera.addComponent(new RotateAnimator(
+    camera,
+    {
+        duration: 10,
+        loop: true,
+        endRotation: [0,-1,0,1]
+    }))
 
 const model = scene.find(node => node.getComponentOfType(Model));
 
@@ -155,6 +164,7 @@ document.addEventListener('mousedown', async (event) => {
 
 function updateScene(time, dt) {
     camera.components[2].update(time,dt);
+    camera.components[3].update(time,dt);
     scene.traverse(node => {
         for (const component of node.components) {
             component.update?.(time, dt);
