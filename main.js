@@ -3,12 +3,6 @@ import { UpdateSystem } from './common/engine/systems/UpdateSystem.js';
 
 import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
 
-import { OrbitController } from './common/engine/controllers/OrbitController.js';
-import { FirstPersonController } from './common/engine/controllers/FirstPersonController.js';
-import { RotateAnimator } from './common/engine/animators/RotateAnimator.js';
-import { LinearAnimator } from './common/engine/animators/LinearAnimator.js';
-import { JumpAnimator } from './common/engine/animators/JumpAnimator.js'; // Import the JumpAnimator class
-
 import {
     Camera,
     Model,
@@ -19,7 +13,7 @@ import {
 import { Renderer } from './Renderer.js';
 import { Light } from './Light.js';
 
-var coins_count = 1000;
+var coins_count = 0;
 var click_count = 0;
 var current_color = [1, 1, 1, 1]
 
@@ -36,7 +30,7 @@ const scene = gltfLoader.loadScene(gltfLoader.defaultScene);
 
 const camera = new Node();
 camera.addComponent(new Transform({
-    translation: [0, 15, 0], // Setting initial translation for the "camera"
+    translation: [0, 7, 0], // Setting initial translation for the "camera"
 }));
 
 // Add a "Camera" component to the newly created node
@@ -49,7 +43,7 @@ const model = scene.find(node => node.getComponentOfType(Model));
 
 const sheepTransform = model.getComponentOfType(Transform);
 const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
-sheepTransform.scale = [5,5,5];
+sheepTransform.scale = [7,7,7];
 sheepTransform.translation = [4,0,-45];
 const rotationLeft1 = quaternionFromAxisAngle([0, 1, 0], -50*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
 sheepTransform.rotation = multiplyQuaternions(sheepTransform.rotation, rotationLeft1);
@@ -64,21 +58,24 @@ const terrainModel = terrainScene.find(node => node.getComponentOfType(Model));
 const terrainTransform = terrainModel.getComponentOfType(Transform);
 terrainTransform.translation[1] -= 30;
 terrainTransform.translation[2] -= 30;
-terrainTransform.scale = [1.1,1.1,1.1]
+terrainTransform.scale = [1.2,1.1,1.1]
 
 scene.addChild(terrainScene);
 
 document.addEventListener('mousedown', async (event) => {
-    
     click_count++;
     if (event.button === 0) {
         if (click_count === 7) {
             // Remove the current sheep model
             scene.removeChild(model); // Assuming "sheepModel" refers to the current sheep model
             try {
+                let audio = new Audio('baa.mp3'); 
+                audio.play();
+                await runSleepFunction(1);
+
                 scene.addChild(model);
                 sheepTransform.scale = [7,7,7];
-                coins_count = coins_count + Math.floor(Math.random() * 5 + 1);
+                coins_count = coins_count + Math.floor(Math.random() * 10 + 1);
                 updateCoins();
 
             } catch (error) {
@@ -97,7 +94,7 @@ document.addEventListener('mousedown', async (event) => {
             sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);  
             
             newModel.components[1].primitives[0].material.baseFactor = current_color
-            var randomX = (Math.random()) * 3 + 4; // Adjust these ranges as needed
+            var randomX = (Math.random()) * 3 + 7; // Adjust these ranges as needed
             var randomY = (Math.random()) * 3
             var randomZ = (Math.random()) * 8;
 
@@ -121,8 +118,6 @@ document.addEventListener('mousedown', async (event) => {
 
             // Add the new model to the scene
             scene.addChild(newModel);
-            coins_count = coins_count + Math.floor(Math.random() * 5 + 1);
-            updateCoins();
 
             // Falling animation towards a certain Y position
             const targetY = 2; // Adjust the target Y position
@@ -159,10 +154,10 @@ function render() {
 
 const light = new Node();
 light.addComponent(new Transform({
-    translation: [0, 60, 20],
+    translation: [0, 40, 0],
 }));
 light.addComponent(new Light({
-    ambient: 0.3,
+    ambient: 0.4,
 }));
 scene.addChild(light);
 
@@ -348,3 +343,12 @@ document.querySelector("#menu").addEventListener("click", (event) => {
         menu_visible = true;
     }
 })
+
+function sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+// Usage example:
+async function runSleepFunction(time) {
+  await sleep(time * 1000);
+}
