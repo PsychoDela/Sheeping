@@ -1,5 +1,4 @@
 import { Transform } from '../core.js';
-
 import { vec3 } from '../../../lib/gl-matrix-module.js';
 
 export class CircularAnimator {
@@ -11,21 +10,19 @@ export class CircularAnimator {
         endAngle = Math.PI, // Assuming a half-circle (180 degrees)
         startTime = 0,
         duration = 1,
-        loop = false,
+        loop = true, // Set loop to true to create back-and-forth animation
     } = {}) {
         this.node = node;
-
         this.center = center;
         this.radius = radius;
-
         this.startAngle = startAngle;
         this.endAngle = endAngle;
-
         this.startTime = startTime;
         this.duration = duration;
         this.loop = loop;
-
         this.playing = true;
+        this.forward = true; // Flag to determine the forward direction
+        this.elapsedTime = 0; // Track elapsed time for reversing direction
     }
 
     play() {
@@ -41,10 +38,22 @@ export class CircularAnimator {
             return;
         }
 
-        const angularInterpolation = (t - this.startTime) / this.duration;
-        const clampedInterpolation = Math.min(Math.max(angularInterpolation, 0), 1);
-        const loopedInterpolation = ((angularInterpolation % 1) + 1) % 1;
-        this.updateNode(this.loop ? loopedInterpolation : clampedInterpolation);
+        this.elapsedTime += dt;
+
+        if (this.elapsedTime >= this.duration) {
+            if (this.loop) {
+                this.elapsedTime = 0;
+                this.forward = !this.forward; // Reverse direction
+            } else {
+                this.playing = false; // Stop playing when reaching the end
+                return;
+            }
+        }
+
+        const progress = this.elapsedTime / this.duration;
+        const interpolation = this.forward ? progress : 1 - progress;
+
+        this.updateNode(interpolation);
     }
 
     updateNode(interpolation) {

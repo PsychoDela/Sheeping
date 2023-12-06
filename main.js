@@ -46,20 +46,14 @@ camera.addComponent(new CircularAnimator(
     camera,
     {
         center: [0,7,-45],
-        radius: 25,
-        duration: 10,
+        radius: 40,
+        duration: 5,
         loop: true,
-        endAngle: 2 * Math.PI
+        startAngle: Math.PI / 3,
+        endAngle: 2 * Math.PI / 3
     }
 ))
 
-camera.addComponent(new RotateAnimator(
-    camera,
-    {
-        duration: 10,
-        loop: true,
-        endRotation: [0,-1,0,1]
-    }))
 
 const model = scene.find(node => node.getComponentOfType(Model));
 
