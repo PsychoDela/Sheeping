@@ -16,7 +16,7 @@ import {
 import { Renderer } from './Renderer.js';
 import { Light } from './Light.js';
 
-var coins_count = 0;
+var coins_count = 1000;
 var click_count = 0;
 var current_color = [1, 1, 1, 1]
 
@@ -87,12 +87,49 @@ terrainTransform.scale = [1.2,1.1,1.1]
 
 scene.addChild(terrainScene);
 
+const sheep2Loader = new GLTFLoader();
+await sheep2Loader.load('common/models/scene.gltf');
+
+const newScene = sheep2Loader.loadScene(sheep2Loader.defaultScene);
+const sheep2 = newScene.find(node => node.getComponentOfType(Model));
+
+// You can adjust the transformation or properties of the new model if needed
+// For example:
+const sheep2Transform = sheep2.getComponentOfType(Transform);
+sheep2Transform.scale = [5,5,5]; // Set the scale
+sheep2Transform.translation = [0,2,-30]; // Set the position
+
+const rotation2 = quaternionFromAxisAngle([1, 0, 0], -80*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
+sheep2Transform.rotation = multiplyQuaternions(sheep2Transform.rotation, rotation2);
+const sheepMaterial2 = sheep2.getComponentOfType(Model).primitives[0].material;
+
+let firstLoaded = true;
+
 document.addEventListener('mousedown', async (event) => {
     click_count++;
     if (event.button === 0) {
-        if (click_count === 7) {
+        if (click_count === 7 && firstLoaded) {
             // Remove the current sheep model
             scene.removeChild(model); // Assuming "sheepModel" refers to the current sheep model
+            try {
+                let audio = new Audio('baa.mp3'); 
+                audio.play();
+                await runSleepFunction(1);
+
+                scene.addChild(sheep2);
+                sheep2Transform.scale = [5,5,5];
+                coins_count = coins_count + Math.floor(Math.random() * 10 + 1);
+                updateCoins();
+
+            } catch (error) {
+                console.error('Error loading model:', error);
+            }
+            click_count = 0;
+            firstLoaded = false;
+        }
+        else if (click_count === 7 && !firstLoaded){
+            // Remove the current sheep model
+            scene.removeChild(sheep2); // Assuming "sheepModel" refers to the current sheep model
             try {
                 let audio = new Audio('baa.mp3'); 
                 audio.play();
@@ -107,6 +144,7 @@ document.addEventListener('mousedown', async (event) => {
                 console.error('Error loading model:', error);
             }
             click_count = 0;
+            firstLoaded = true;
         }
         try {
             const newModelLoader = new GLTFLoader();
@@ -116,7 +154,12 @@ document.addEventListener('mousedown', async (event) => {
             const newModel = newModelScene.find(node => node.getComponentOfType(Model));
             const transform = newModel.getComponentOfType(Transform);
  
-            sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);  
+            if (firstLoaded) {
+                sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);
+            }
+            else{
+                sheep2Transform.scale = sheep2Transform.scale.map(value => value * 0.95);
+            } 
             
             newModel.components[1].primitives[0].material.baseFactor = current_color
             var randomX = (Math.random()) * 3 + 7; // Adjust these ranges as needed
@@ -266,6 +309,7 @@ document.querySelector("#dugme1").addEventListener("click", (event) => {
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
         sheepMaterial.baseFactor = current_color;
+        sheepMaterial2.baseFactor = current_color;
     }
 
     else {
@@ -283,6 +327,7 @@ document.querySelector("#dugme2").addEventListener("click", (event) => {
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
         sheepMaterial.baseFactor = current_color;
+        sheepMaterial2.baseFactor = current_color;
     }
 
     else {
@@ -300,6 +345,7 @@ document.querySelector("#dugme3").addEventListener("click", (event) => {
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
         sheepMaterial.baseFactor = current_color;
+        sheepMaterial2.baseFactor = current_color;
     }
 
     else {
@@ -317,6 +363,7 @@ document.querySelector("#dugme4").addEventListener("click", (event) => {
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
         sheepMaterial.baseFactor = current_color;
+        sheepMaterial2.baseFactor = current_color;
     }
 
     else {
@@ -334,6 +381,7 @@ document.querySelector("#dugme5").addEventListener("click", (event) => {
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
         sheepMaterial.baseFactor = current_color;
+        sheepMaterial2.baseFactor = current_color;
     }
 
     else {
@@ -351,6 +399,7 @@ document.querySelector("#dugme6").addEventListener("click", (event) => {
         document.querySelector(".menu").style.visibility = "hidden";
         menu_visible = false;
         sheepMaterial.baseFactor = current_color;
+        sheepMaterial2.baseFactor = current_color;
     }
 
     else {
