@@ -2,7 +2,7 @@ import { ResizeSystem } from './common/engine/systems/ResizeSystem.js';
 import { UpdateSystem } from './common/engine/systems/UpdateSystem.js';
 import { LinearAnimator } from './common/engine/animators/LinearAnimator.js';
 import { CircularAnimator } from './common/engine/animators/CircularAnimator.js';
-import { RotateAnimator } from './common/engine/animators/RotateAnimator.js'
+import { RotationalAnimator } from './common/engine/animators/RotationalAnimator.js'
 
 import { GLTFLoader } from './common/engine/loaders/GLTFLoader.js';
 
@@ -46,11 +46,20 @@ camera.addComponent(new CircularAnimator(
     camera,
     {
         center: [0,7,-45],
-        radius: 40,
+        radius: 45,
         duration: 5,
         loop: true,
         startAngle: Math.PI / 3,
         endAngle: 2 * Math.PI / 3
+    }
+))
+
+camera.addComponent(new RotationalAnimator(
+    camera,
+    {
+        duration: 5,
+        startAngle: -Math.PI / 3 + 0.2,
+        endAngle: Math.PI / 3 - 0.2
     }
 ))
 
@@ -175,7 +184,7 @@ light.addComponent(new Transform({
     translation: [0, 40, 0],
 }));
 light.addComponent(new Light({
-    ambient: 0.4,
+    ambient: 0.5,
 }));
 scene.addChild(light);
 
