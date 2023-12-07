@@ -1,23 +1,43 @@
-body{
-    background-color: green;
+body {
+    background-image: url("../models/bck.jpg");
     overflow: hidden;
+    cursor: url("../models/cursor.png"), auto; 
 }
-h1{
+
+@keyframes vibrate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+h1 {
     color: white;
     font-size: 5em;
+    animation: vibrate 2s infinite; 
 }
 
-.btn {
-    margin-right: 0.5rem !important
+.cloud-button {
+    display: inline-flex;
+    padding: 20px 35px; 
+    border: none;
+    border-radius: 30px; 
+    background-color: #fff; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    position: relative;
+    overflow: hidden;
+    font-size: 1.5em; 
+     margin-top: -6vh; 
 }
 
-.btn {
-    font-size: 0.875rem;
-    line-height: 1;
-    font-weight: 400;
-    padding: 1rem 2rem; /* Adjust the padding values to increase button size */
-    border-radius: 0.1275rem;
-    background-color: red;
+.button-text {
+    position: relative;
+    z-index: 1; 
 }
 
 .ct{
