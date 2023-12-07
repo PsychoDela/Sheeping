@@ -19,6 +19,8 @@ import { Light } from './Light.js';
 var coins_count = 0;
 var click_count = 0;
 var current_color = [1, 1, 1, 1]
+var x = 0;
+var y = 0;
 
 updateCoins()
 
@@ -49,8 +51,8 @@ camera.addComponent(new CircularAnimator(
         radius: 45,
         duration: 5,
         loop: true,
-        startAngle: Math.PI / 3,
-        endAngle: 2 * Math.PI / 3
+        startAngle: Math.PI / 3 - 0.3,
+        endAngle: 2 * Math.PI / 3 + 0.3
     }
 ))
 
@@ -58,8 +60,8 @@ camera.addComponent(new RotationalAnimator(
     camera,
     {
         duration: 5,
-        startAngle: -Math.PI / 3 + 0.2,
-        endAngle: Math.PI / 3 - 0.2
+        startAngle: -Math.PI / 3 + 0.1,
+        endAngle: Math.PI / 3 - 0.1
     }
 ))
 
@@ -74,7 +76,7 @@ const rotationLeft1 = quaternionFromAxisAngle([0, 1, 0], -50*Math.PI / 180); // 
 sheepTransform.rotation = multiplyQuaternions(sheepTransform.rotation, rotationLeft1);
 
 const terrainLoader = new GLTFLoader();
-await terrainLoader.load('common/models/terrain.gltf');
+await terrainLoader.load('common/models/new_terrain.gltf');
 
 const terrainScene = terrainLoader.loadScene(terrainLoader.defaultScene);
 const terrainModel = terrainScene.find(node => node.getComponentOfType(Model));
@@ -97,7 +99,7 @@ const sheep2 = newScene.find(node => node.getComponentOfType(Model));
 // For example:
 const sheep2Transform = sheep2.getComponentOfType(Transform);
 sheep2Transform.scale = [5,5,5]; // Set the scale
-sheep2Transform.translation = [0,2,-30]; // Set the position
+sheep2Transform.translation = [0,2,-45]; // Set the position
 
 const rotation2 = quaternionFromAxisAngle([1, 0, 0], -80*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
 sheep2Transform.rotation = multiplyQuaternions(sheep2Transform.rotation, rotation2);
@@ -106,8 +108,9 @@ const sheepMaterial2 = sheep2.getComponentOfType(Model).primitives[0].material;
 let firstLoaded = true;
 
 document.addEventListener('mousedown', async (event) => {
-    click_count++;
-    if (event.button === 0) {
+
+    if (event.button === 0 && x >= maxX / 2 - 350 && x <= maxX / 2 + 350 && y >= maxY / 2 - 250 && y <= maxY / 2 + 250) {
+            click_count++;
         if (click_count === 7 && firstLoaded) {
             // Remove the current sheep model
             scene.removeChild(model); // Assuming "sheepModel" refers to the current sheep model
@@ -127,7 +130,8 @@ document.addEventListener('mousedown', async (event) => {
             click_count = 0;
             firstLoaded = false;
         }
-        else if (click_count === 7 && !firstLoaded){
+        else if (click_count === 7 && x >= maxX / 2 - 350 && x <= maxX / 2 + 350 && y >= maxY / 2 - 250 && y <= maxY / 2 + 250){
+                click_count++;
             // Remove the current sheep model
             scene.removeChild(sheep2); // Assuming "sheepModel" refers to the current sheep model
             try {
@@ -429,3 +433,37 @@ function sleep(milliseconds) {
 async function runSleepFunction(time) {
   await sleep(time * 1000);
 }
+
+var maxX, maxY;
+
+document.addEventListener('mousemove', (e) => {
+  const cursorImage = document.getElementById('cursor-image');
+  maxX = window.innerWidth - cursorImage.clientWidth; // Maximum X-coordinate
+  maxY = window.innerHeight - cursorImage.clientHeight; // Maximum Y-coordinate
+
+  // Calculate new position considering the bounds
+  let posX = e.clientX;
+  let posY = e.clientY;
+
+  x = posX;
+  y = posY;
+  
+  // Check and adjust X-coordinate to stay within bounds
+  if (posX > maxX) {
+    posX = maxX;
+  }
+  if (posX < 0) {
+    posX = 0;
+  }
+  
+  // Check and adjust Y-coordinate to stay within bounds
+  if (posY > maxY) {
+    posY = maxY;
+  }
+  if (posY < 0) {
+    posY = 0;
+  }
+  
+  cursorImage.style.left = `${posX}px`; // Set the new X-coordinate
+  cursorImage.style.top = `${posY}px`; // Set the new Y-coordinate
+});

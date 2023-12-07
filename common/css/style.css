@@ -1,6 +1,7 @@
 body, html {
     margin: 0;
     padding: 0;
+    cursor: none;
 }
 
 * {
@@ -91,6 +92,7 @@ img {
     font-weight: bold;
     text-align: center;
     visibility: hidden;
+    cursor: pointer;
 }
 
 #dugme1, #dugme2, #dugme3, #dugme4, #dugme5, #dugme6 {
@@ -116,3 +118,8 @@ img {
     user-select: none;
 }
 
+.cursor {
+    position: absolute;
+    pointer-events: none;
+    width: 35px;
+}
