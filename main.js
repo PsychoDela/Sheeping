@@ -16,7 +16,7 @@ import {
 import { Renderer } from './Renderer.js';
 import { Light } from './Light.js';
 
-var coins_count = 1000;
+var coins_count = 0;
 var click_count = 0;
 var current_color = [1, 1, 1, 1]
 
@@ -148,11 +148,12 @@ document.addEventListener('mousedown', async (event) => {
         }
         try {
             const newModelLoader = new GLTFLoader();
-            await newModelLoader.load('common/models/wool.gltf');
+            await newModelLoader.load('common/models/wool3.gltf');
 
             const newModelScene = newModelLoader.loadScene(newModelLoader.defaultScene);
             const newModel = newModelScene.find(node => node.getComponentOfType(Model));
             const transform = newModel.getComponentOfType(Transform);
+            
  
             if (firstLoaded) {
                 sheepTransform.scale = sheepTransform.scale.map(value => value * 0.95);
@@ -181,7 +182,7 @@ document.addEventListener('mousedown', async (event) => {
             }
 
             // Set the initial position of the new model
-            transform.scale = [0.02, 0.02, 0.02]; // Change the scale to make sure it's visible
+            transform.scale = [0.6,0.6,0.6];
             transform.translation = [randomX, randomY + 7, 15 + randomZ - 60]; // Starts higher up
 
             // Add the new model to the scene

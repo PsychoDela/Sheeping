@@ -8,38 +8,49 @@
 		{
 			"name":"Scene",
 			"nodes":[
-				0
+				2
 			]
 		}
 	],
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"bush_02",
+			"name":"Object_2"
+		},
+		{
+			"children":[
+				0
+			],
+			"name":"1f6ed6180e054573a97459158f6007e6.obj.cleaner.materialmerger.gle"
+		},
+		{
+			"children":[
+				1
+			],
+			"name":"Sketchfab_model",
 			"rotation":[
-				0.7071068286895752,
+				-0.70710688829422,
 				0,
 				0,
-				0.7071068286895752
+				0.7071066498756409
 			]
 		}
 	],
 	"materials":[
 		{
-			"doubleSided":true,
 			"name":"Material.001",
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
 					"index":0
 				},
 				"metallicFactor":0,
-				"roughnessFactor":0.5
+				"roughnessFactor":0.6000000238418579
 			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"bush_02",
+			"name":"Object_0",
 			"primitives":[
 				{
 					"attributes":{
@@ -70,61 +81,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":432,
+			"count":576,
 			"max":[
-				60.67430114746094,
-				56.68320083618164,
-				16.669599533081055
+				2.3993990421295166,
+				1.3719810247421265,
+				1.5689020156860352
 			],
 			"min":[
-				-68.21109771728516,
-				-87.97730255126953,
-				-113.97750091552734
+				-1.9854329824447632,
+				-0.9574099779129028,
+				-1.3864949941635132
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":432,
+			"count":576,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":432,
+			"count":576,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":1152,
+			"count":2748,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":5184,
+			"byteLength":6912,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":5184,
-			"byteOffset":5184,
+			"byteLength":6912,
+			"byteOffset":6912,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3456,
-			"byteOffset":10368,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":2304,
+			"byteLength":4608,
 			"byteOffset":13824,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":5496,
+			"byteOffset":18432,
 			"target":34963
 		}
 	],
@@ -136,8 +147,8 @@
 	],
 	"buffers":[
 		{
-			"byteLength":16128,
-			"uri":"wool.bin"
+			"byteLength":23928,
+			"uri":"wool3.bin"
 		}
 	]
 }
