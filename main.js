@@ -22,6 +22,9 @@ var current_color = [1, 1, 1, 1]
 var x = 0;
 var y = 0;
 
+const audioB = document.getElementById('background-music');
+audioB.play();
+
 updateCoins()
 
 const canvas = document.querySelector('canvas');
@@ -49,7 +52,7 @@ camera.addComponent(new CircularAnimator(
     {
         center: [0,7,-45],
         radius: 45,
-        duration: 5,
+        duration: 10,
         loop: true,
         startAngle: Math.PI / 3 - 0.3,
         endAngle: 2 * Math.PI / 3 + 0.3
@@ -59,7 +62,7 @@ camera.addComponent(new CircularAnimator(
 camera.addComponent(new RotationalAnimator(
     camera,
     {
-        duration: 5,
+        duration: 10,
         startAngle: -Math.PI / 3 + 0.1,
         endAngle: Math.PI / 3 - 0.1
     }
@@ -70,7 +73,7 @@ const model = scene.find(node => node.getComponentOfType(Model));
 
 const sheepTransform = model.getComponentOfType(Transform);
 const sheepMaterial = model.getComponentOfType(Model).primitives[0].material;
-sheepTransform.scale = [7,7,7];
+sheepTransform.scale = [5,5,5];
 sheepTransform.translation = [4,0,-45];
 const rotationLeft1 = quaternionFromAxisAngle([0, 1, 0], -50*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
 sheepTransform.rotation = multiplyQuaternions(sheepTransform.rotation, rotationLeft1);
@@ -140,7 +143,7 @@ document.addEventListener('mousedown', async (event) => {
                 await runSleepFunction(1);
 
                 scene.addChild(model);
-                sheepTransform.scale = [7,7,7];
+                sheepTransform.scale = [5,5,5];
                 coins_count = coins_count + Math.floor(Math.random() * 10 + 1);
                 updateCoins();
 

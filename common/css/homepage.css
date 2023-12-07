@@ -17,7 +17,7 @@ body {
 }
 
 h1 {
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: 5em;
     animation: vibrate 2s infinite; 
 }
@@ -25,14 +25,15 @@ h1 {
 .cloud-button {
     display: inline-flex;
     padding: 20px 35px; 
-    border: none;
+    border: 2px solid black;
     border-radius: 30px; 
-    background-color: #fff; 
+    background-color: yellow; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     position: relative;
     overflow: hidden;
     font-size: 1.5em; 
      margin-top: -6vh; 
+    cursor: pointer;
 }
 
 .button-text {
