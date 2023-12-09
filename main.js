@@ -109,8 +109,19 @@ sheep2Transform.rotation = multiplyQuaternions(sheep2Transform.rotation, rotatio
 const sheepMaterial2 = sheep2.getComponentOfType(Model).primitives[0].material;
 
 let firstLoaded = true;
+var image = 0;
 
 document.addEventListener('mousedown', async (event) => {
+    const cursorImage = document.getElementById('cursor-image');
+
+    if (image == 0) {
+        cursorImage.src = "common/models/makaze.png";
+        image = 1;
+    }
+    else if (image == 1) {
+        cursorImage.src = "common/models/makaze2.png"
+        image = 0;
+    }
 
     if (event.button === 0 && x >= maxX / 2 - 350 && x <= maxX / 2 + 350 && y >= maxY / 2 - 250 && y <= maxY / 2 + 250) {
             click_count++;
