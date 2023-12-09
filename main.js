@@ -273,44 +273,7 @@ function multiplyQuaternions(q1, q2) {
     return result;
 }
 
-document.addEventListener('keydown', (event) => {
-    const cameraTransform = camera.getComponentOfType(Transform);
-    const current = cameraTransform.translation;
-    const rotation = cameraTransform.rotation;
 
-    switch (event.key) {
-        case 'w':
-        case 'W':
-            current[2] -= 5;
-            break;
-        case 'a':
-        case 'A':
-            current[0] -= 5;
-            break;
-        case 's':
-        case 'S':
-            current[2] += 5;
-            break;
-        case 'd':
-        case 'D':
-            current[0] += 5;
-            break;
-        case 'q':
-        case 'Q':
-            const rotationLeft = quaternionFromAxisAngle([0, 1, 0], 5*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
-            cameraTransform.rotation = multiplyQuaternions(rotation, rotationLeft);
-            break;
-        case 'e':
-        case 'E':
-            const rotationRight = quaternionFromAxisAngle([0, 1, 0], -5*Math.PI / 180); // Rotate right by an angle (in radians), e.g., 1 degree here
-            cameraTransform.rotation = multiplyQuaternions(rotation, rotationRight);
-            break;
-        default:
-            break;
-    }
-
-    cameraTransform.translation = current;
-});
 
 function updateCoins() {
     document.querySelector(".counter").innerHTML = coins_count + ' <img src="coins-solid.svg">'; 
