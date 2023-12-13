@@ -102,9 +102,9 @@ const sheep2 = newScene.find(node => node.getComponentOfType(Model));
 // For example:
 const sheep2Transform = sheep2.getComponentOfType(Transform);
 sheep2Transform.scale = [5,5,5]; // Set the scale
-sheep2Transform.translation = [0,2,-45]; // Set the position
+sheep2Transform.translation = [0,2,-45]; 
 
-const rotation2 = quaternionFromAxisAngle([1, 0, 0], -80*Math.PI / 180); // Rotate left by an angle (in radians), e.g., 1 degree here
+const rotation2 = quaternionFromAxisAngle([1, 0, 0], -80*Math.PI / 180); 
 sheep2Transform.rotation = multiplyQuaternions(sheep2Transform.rotation, rotation2);
 const sheepMaterial2 = sheep2.getComponentOfType(Model).primitives[0].material;
 
