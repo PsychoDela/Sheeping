@@ -41,7 +41,7 @@ camera.addComponent(new Transform({
     translation: [0, 7, 0], // Setting initial translation for the "camera"
 }));
 
-// Add a "Camera" component to the newly created node
+
 camera.addComponent(new Camera({
     aspect: canvas.width / canvas.height, // Set the initial aspect ratio
     far: 1000,
