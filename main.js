@@ -101,7 +101,7 @@ const sheep2 = newScene.find(node => node.getComponentOfType(Model));
 // You can adjust the transformation or properties of the new model if needed
 // For example:
 const sheep2Transform = sheep2.getComponentOfType(Transform);
-sheep2Transform.scale = [5,5,5]; // Set the scale
+sheep2Transform.scale = [5,5,5]; 
 sheep2Transform.translation = [0,2,-45]; 
 
 const rotation2 = quaternionFromAxisAngle([1, 0, 0], -80*Math.PI / 180); 
